@@ -8,7 +8,9 @@ import (
 
 	grpcService "github.com/Penetration-Platform-Go/User-Service/grpc"
 	"github.com/Penetration-Platform-Go/User-Service/route"
+	user "github.com/Penetration-Platform-Go/gRPC-Files/User-Service"
 	flag "github.com/spf13/pflag"
+	"google.golang.org/grpc"
 )
 
 func main() {
@@ -31,7 +33,7 @@ func main() {
 		}
 		log.Printf("Listening on: %s", *grpcPort)
 		gs := grpc.NewServer()
-		user.RegisterUserServer(gs, &grpcService.AuthService{})
+		user.RegisterUserServer(gs, &grpcService.UserService{})
 		gs.Serve(lis)
 	}()
 
