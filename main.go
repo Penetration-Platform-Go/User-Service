@@ -16,12 +16,12 @@ import (
 func main() {
 	var PORT = os.Getenv("PORT")
 	if len(PORT) == 0 {
-		PORT = "8080"
+		PORT = "8000"
 	}
 	var port = flag.StringP("port", "p", PORT, "Define the port where service runs")
 	var GRPCPORT = os.Getenv("GRPC_PORT")
 	if len(GRPCPORT) == 0 {
-		GRPCPORT = "8081"
+		GRPCPORT = "8080"
 	}
 	var grpcPort = flag.StringP("grpc_port", "g", GRPCPORT, "Define the port where grpc service runs")
 	flag.Parse()
