@@ -11,13 +11,9 @@ import (
 	"google.golang.org/grpc"
 )
 
-// UserService Struct
-type UserService struct {
-}
-
 // GetInformationByUsername Method
 func (u *UserService) GetInformationByUsername(ctx context.Context, username *user.Username) (*user.UserInformation, error) {
-	conn, err := grpc.Dial("localhost:8082", grpc.WithInsecure())
+	conn, err := grpc.Dial(MySQLClient, grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("fail to dial: %v", err)
 	}

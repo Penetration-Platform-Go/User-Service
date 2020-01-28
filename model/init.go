@@ -11,10 +11,13 @@ type User struct {
 
 // Result define
 type Result struct {
-	isValid bool
-	value   string
+	IsValid bool
+	Value   string
 }
 
-func init() {
+// MySQLClient define
+var MySQLClient string
 
+func init() {
+	MySQLClient = "localhost:8082"
 }

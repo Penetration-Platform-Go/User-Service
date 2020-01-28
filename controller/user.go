@@ -1,10 +1,9 @@
 package controller
 
-import "github.com/gin-gonic/gin"
-
-import "github.com/Penetration-Platform-Go/User-Service/model"
-
-import "fmt"
+import (
+	"github.com/Penetration-Platform-Go/User-Service/model"
+	"github.com/gin-gonic/gin"
+)
 
 // CreateUser method for regist api
 func CreateUser(ctx *gin.Context) {
@@ -16,7 +15,11 @@ func CreateUser(ctx *gin.Context) {
 		Photo:    ctx.PostForm("photo"),
 	}
 	result := model.InsertUser(&user)
-	fmt.Println(result)
+	if result {
+		ctx.Status(200)
+	} else {
+		ctx.Status(400)
+	}
 }
 
 // UpdateUser method for regist api
@@ -31,5 +34,9 @@ func UpdateUser(ctx *gin.Context) {
 		Photo:    ctx.PostForm("photo"),
 	}
 	result := model.UpdateUser(&user)
-	fmt.Println(result)
+	if result {
+		ctx.Status(200)
+	} else {
+		ctx.Status(400)
+	}
 }
