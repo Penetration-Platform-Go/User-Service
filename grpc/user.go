@@ -3,6 +3,7 @@ package grpc
 import (
 	"context"
 	"errors"
+	"io"
 	"log"
 	"time"
 
@@ -21,15 +22,28 @@ func (u *UserService) GetInformationByUsername(ctx context.Context, username *us
 	mclient := pb.NewMysqlClient(conn)
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
-	result, _ := mclient.QueryUserByUsername(ctx, &pb.Username{Username: username.Username})
+	stream, err := mclient.QueryUsers(ctx, &pb.Condition{
+		Value: []*pb.Value{
+			{Key: "username", Value: username.Username},
+		},
+	})
+	if err != nil {
+		return nil, err
+	}
+	var result user.UserInformation
+	for {
+		feature, err := stream.Recv()
+		if err == io.EOF || feature == nil {
+			break
+		}
+		result.Username = feature.Username
+		result.Password = feature.Password
+		result.Email = feature.Email
+		result.Photo = feature.Photo
+		result.Nickname = feature.Nickname
+	}
 	if result.Username == "" {
 		return &user.UserInformation{}, errors.New("Username not exists")
 	}
-	return &user.UserInformation{
-		Username: result.Username,
-		Nickname: result.Nickname,
-		Password: result.Password,
-		Email:    result.Email,
-		Photo:    result.Photo,
-	}, nil
+	return &result, nil
 }
