@@ -32,16 +32,18 @@ func CreateUser(ctx *gin.Context) {
 
 // UpdateUser method for regist api
 func UpdateUser(ctx *gin.Context) {
-	// check jwt
-
+	username, exist := ctx.Get("username")
+	if !exist || username.(string) != ctx.PostForm("username") {
+		ctx.Status(403)
+		return
+	}
 	user := model.User{
-		Username: ctx.PostForm("username"),
-		Password: lib.StringToMd5(ctx.PostForm("password")),
+		Username: username.(string),
+		// Password: lib.StringToMd5(ctx.PostForm("password")),
 		Nickname: ctx.PostForm("nickname"),
 		Email:    ctx.PostForm("email"),
 		Photo:    ctx.PostForm("photo"),
 	}
-
 	if !lib.VerifyUserFormat(&user) {
 		ctx.Status(406)
 		return

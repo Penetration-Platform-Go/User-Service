@@ -27,7 +27,7 @@ func verifyEmailFormat(email string) bool {
 
 // verifyUsernameFormat
 func verifyUsernameFormat(username string) bool {
-	pattern := `^[a-z0-9_-]{6,20}$`
+	pattern := `^[a-z0-9_-]{5,20}$`
 	reg := regexp.MustCompile(pattern)
 	return reg.MatchString(username)
 }

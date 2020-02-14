@@ -1,10 +1,12 @@
 package route
 
-import "github.com/gin-gonic/gin"
-
-import "github.com/Penetration-Platform-Go/User-Service/controller"
+import (
+	"github.com/Penetration-Platform-Go/User-Service/controller"
+	"github.com/Penetration-Platform-Go/User-Service/middleware"
+	"github.com/gin-gonic/gin"
+)
 
 func userRoute(route *gin.RouterGroup) {
 	route.POST("/user", controller.CreateUser)
-	route.PUT("/user", controller.UpdateUser)
+	route.PUT("/user", middleware.Auth(), controller.UpdateUser)
 }
