@@ -1,6 +1,9 @@
 package controller
 
 import (
+	"strconv"
+	"time"
+
 	"github.com/Penetration-Platform-Go/User-Service/lib"
 	"github.com/Penetration-Platform-Go/User-Service/model"
 	"github.com/gin-gonic/gin"
@@ -55,4 +58,20 @@ func UpdateUser(ctx *gin.Context) {
 	} else {
 		ctx.Status(400)
 	}
+}
+
+// UploadAvatar Api restore file into {webroot}/platform/
+func UploadAvatar(ctx *gin.Context) {
+	file, err := ctx.FormFile("avatar")
+	if err != nil {
+		ctx.Status(400)
+		return
+	}
+	path := lib.StringToMd5(strconv.FormatInt(time.Now().UnixNano(), 10)) + ".png"
+	err = ctx.SaveUploadedFile(file, photoPath+path)
+	if err != nil {
+		ctx.Status(400)
+		return
+	}
+	ctx.String(200, path)
 }

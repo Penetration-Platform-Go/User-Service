@@ -10,8 +10,9 @@ import (
 
 // VerifyUserFormat check UserInformation format
 func VerifyUserFormat(user *model.User) bool {
+	// TODO: localhost check
 	if verifyUsernameFormat(user.Username) && verifyEmailFormat(user.Email) &&
-		verifyNicknameFormat(user.Nickname) && verifyPhotoFormat(user.Photo) {
+		verifyNicknameFormat(user.Nickname) {
 		return true
 	}
 	return false
@@ -27,14 +28,14 @@ func verifyEmailFormat(email string) bool {
 
 // verifyUsernameFormat
 func verifyUsernameFormat(username string) bool {
-	pattern := `^[a-z0-9_-]{5,20}$`
+	pattern := `^[a-zA-Z0-9_-]{5,20}$`
 	reg := regexp.MustCompile(pattern)
 	return reg.MatchString(username)
 }
 
 // verifyNicknameFormat
 func verifyNicknameFormat(nickname string) bool {
-	pattern := `^[a-z0-9_-]{3,16}$`
+	pattern := `^[a-zA-Z0-9_-]{3,16}$`
 	reg := regexp.MustCompile(pattern)
 	return reg.MatchString(nickname)
 }

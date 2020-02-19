@@ -9,4 +9,5 @@ import (
 func userRoute(route *gin.RouterGroup) {
 	route.POST("/user", controller.CreateUser)
 	route.PUT("/user", middleware.Auth(), controller.UpdateUser)
+	route.POST("/avatar", middleware.Auth(), controller.UploadAvatar)
 }
