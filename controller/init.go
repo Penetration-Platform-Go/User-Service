@@ -3,5 +3,5 @@ package controller
 var photoPath string
 
 func init() {
-	photoPath = "/Library/WebServer/Documents/platform/"
+	photoPath = "/var/www/html/platform/"
 }
