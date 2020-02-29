@@ -64,7 +64,7 @@ func UpdateUser(ctx *gin.Context) {
 func UploadAvatar(ctx *gin.Context) {
 	file, err := ctx.FormFile("avatar")
 	if err != nil {
-		ctx.Status(400)
+		ctx.Status(406)
 		return
 	}
 	path := lib.StringToMd5(strconv.FormatInt(time.Now().UnixNano(), 10)) + ".png"
